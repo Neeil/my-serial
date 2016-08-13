@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    
+    <script type="text/javascript">
+      function baudrateSelected(select){
+          var selectedOption = select.options[select.selectedIndex];
+          console.log(selectedOption.value);
+      }
+    </script>  
+  </head>
+
+  <body>    
+    <!--<a id="test" class="waves-effect waves-light btn">button</a>-->
+    <div class="container">
+      <div class="row center">
+        <form id="portConfigForm" name="portConfigForm">
+          <div class="row center">
+            <h4 class="header col s12 orange-text">Serial Port Settings</h4>
+          </div>
+          <div class="row">
+            <div class="input-field col s10 offset-s1">
+              <select id="portName" name="portName">
+                <option value="1">COM1</option>
+                <option value="2">COM2</option>
+                <option value="3">COM3</option>
+                <option value="4">COM4</option>
+              </select>
+              <label>COMx</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s10 offset-s1">
+              <select id="baudrate" name="baudrate" onchange="baudrateSelected(this)">
+                <option value="4800">4800</option>
+                <option value="9600">9600</option>
+                <option value="19200">19200</option>
+                <option value="38400">38400</option>
+                <option value="57600">57600</option>
+                <option value="115200">115200</option>
+              </select>
+              <label>Baud Rate</label>
+            </div>
+          </div>
+          <div class="row">
+            <a id="async-msg" class="waves-effect waves-light btn">Async</a>
+            <a id="test-port" class="waves-effect waves-light btn">Test</a>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <!--Import jQuery before materialize.js-->
+    <!-- Insert this line above script imports  -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <!-- normal script imports etc  -->
+    <script src="js/jquery-3.1.0.min.js"></script>      
+    <!-- Insert this line after script imports -->
+    <script>if (window.module) module = window.module;</script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+    </script>
+
+    <script type="text/javascript">
+      require('../src/serialconfig.js')
+    </script>
+
+    </body>
+</html>
