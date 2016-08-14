@@ -1,117 +1,115 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-  </head>
-  
-   <body>    
-    <div class="navbar-fixed">
-      <nav>
-        <div class="nav-wrapper">
-          <a href="#!" class="brand-logo">Logo</a>
-          <ul class="right">
-            <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-    <div class="container">
-      <br />
-      <div class="row center"> 
-        <a id="test" class="waves-effect waves-light btn col s3">Port Settings</a>
-        <a id="send-btn" class="waves-effect waves-light btn col s3 offset-s1">Test</a>
-      </div>
-    </div>
-    <div class="row">
-      <form class="col s12">
-        <div class="row">
-          <div class="input-field col s12">
-            <textarea id="tx" class="materialize-textarea">aaa</textarea>
-            <label for="tx">tx</label>
-          </div>
-          <div class="input-field col s12">
-            <textarea id="rx" class="materialize-textarea">bbbbb</textarea>
-            <label for="rx">rx</label>
-          </div>
-        </div>
-      </form>
-    </div>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+</head>
 
-    <div class="container">
-      <div class="row center">
-        <form id="portConfigForm" name="portConfigForm">
-          <div class="row">
-            <h5 class="header col s6 orange-text">Serial Port Settings</h5>
-          </div>
-          <div class="row">
-            <div class="input-field col s5 offset-s1">
-              <select id="portName" name="portName">
-              </select>
-              <label>COMx</label>
+<body>
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#!" class="brand-logo">Logo</a>
+            <ul class="right">
+                <li><a href="sass.html">Sass</a></li>
+                <li><a href="badges.html">Components</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div>
+    <br/>
+    <div class="row">
+        <div class="col s3">
+            <form id="portConfigForm" name="portConfigForm">
+                <div class="row">
+                    <h5 class="header orange-text">Serial Port Settings</h5>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <select id="portName" name="portName">
+                        </select>
+                        <label>COMx</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <select id="baudrate" name="baudrate" onchange="baudrateSelected(this)">
+                            <option value="4800">4800</option>
+                            <option value="9600">9600</option>
+                            <option value="19200">19200</option>
+                            <option value="38400">38400</option>
+                            <option value="57600">57600</option>
+                            <option value="115200">115200</option>
+                        </select>
+                        <label>Baud Rate</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <a id="open-port" class="waves-effect waves-light btn">OPEN</a>
+                    <a id="test-port" class="waves-effect waves-light btn">TEST</a>
+                </div>
+            </form>
+        </div>
+        <div class="col s9">
+            <div class="row center">
+                <a id="test" class="waves-effect waves-light btn">Port Settings</a>
+                <a id="send-btn" class="waves-effect waves-light btn">Test</a>
             </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s5 offset-s1">
-              <select id="baudrate" name="baudrate" onchange="baudrateSelected(this)">
-                <option value="4800">4800</option>
-                <option value="9600">9600</option>
-                <option value="19200">19200</option>
-                <option value="38400">38400</option>
-                <option value="57600">57600</option>
-                <option value="115200">115200</option>
-              </select>
-              <label>Baud Rate</label>
+            <div class="row">
+                <div class="row">
+                    <div class="input-field">
+                        <textarea id="tx" class="materialize-textarea">aaa</textarea>
+                        <label for="tx">tx</label>
+                    </div>
+                    <div class="input-field">
+                        <textarea id="rx" class="materialize-textarea">bbbbb</textarea>
+                        <label for="rx">rx</label>
+                    </div>
+                    </form>
+                </div>
             </div>
-          </div>
-          <div class="row col s6">
-            <a id="open-port" class="waves-effect waves-light btn">OPEN</a>
-            <a id="test-port" class="waves-effect waves-light btn">TEST</a>
-          </div>
-        </form>
-      </div>
+        </div>
     </div>
 
 
     <script>
-    if (typeof module === 'object') {
-      window.module = module; 
-      module = undefined;
-    }
+        if (typeof module === 'object') {
+            window.module = module;
+            module = undefined;
+        }
     </script>
     <!-- normal script imports etc  -->
-    <script src="js/jquery-3.1.0.min.js"></script>      
+    <script src="js/jquery-3.1.0.min.js"></script>
     <!-- Insert this line after script imports -->
     <script>if (window.module) module = window.module;</script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
 
     <script type="text/javascript">
-      require('../src/index.js')
-      var port = require('serialport')
+        require('../src/index.js')
+        var port = require('serialport')
 
-      $(document).ready(function() {
-        
-        port.list(function(err, ports){
-          ports.forEach(function(port){
-            var name = port.comName
-            var portNameSelect = $('select[name="portName"]')
-            var option = '<option value="' + name + '">' + name + '</option>'
-            $('#portName').append(option)            
-          })
-          $('select').material_select(); 
-        })
-        // $('select').material_select('destroy');
-        // $('select').material_select();        
-      });
+        $(document).ready(function () {
 
-      function baudrateSelected(select){
-          var selectedOption = select.options[select.selectedIndex];
-          console.log(selectedOption.value);
-      }
-    </script> 
-  </body>
+            port.list(function (err, ports) {
+                ports.forEach(function (port) {
+                    var name = port.comName
+                    var portNameSelect = $('select[name="portName"]')
+                    var option = '<option value="' + name + '">' + name + '</option>'
+                    $('#portName').append(option)
+                })
+                $('select').material_select();
+            })
+        });
+
+        function baudrateSelected(select) {
+            var selectedOption = select.options[select.selectedIndex];
+            console.log(selectedOption.value);
+        }
+    </script>
+</body>
 </html>

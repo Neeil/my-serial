@@ -6,7 +6,7 @@ const BrowserWindow = electron.BrowserWindow
 
 const path = require('path')
 
-var Serialport = require('serialport')
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -20,7 +20,7 @@ function createWindow () {
   mainWindow.loadURL(`file://${__dirname}/view/index.html`)
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -59,15 +59,31 @@ ipc.on('asynchronous-message', function(event, arg){
     console.log(arg)  
 })
 
-var portName
-var portBaud
 
-ipc.on('serialport-start', function(event, arg){
-    portName = arg.portName;
-    portBaud = arg.baudrate;
-    event.sender.send('serialport-start', arg)
+// var Serialport = require('serialport')
+// var portName
+// var portBaud
+// var serialport = new Serialport('COM4')
+
+// ipc.on('serialport-start', function(event, arg){
+//     portName = arg.portName;
+//     portBaud = arg.baudrate;
+//     serialport = new Serialport(portName, {
+//         baudrate : portBaud
+//     })    
+// })
+
+ipc.on('serialport-send', function(event, arg){
+    // if(serialport){
+    //     serialport.write(arg)
+    // }
     console.log(arg)
 })
+
+// serialport.on('data', function(data){
+//     console.log('Data: ' + data)
+//     ipc.send('serialport-received', data)
+// })
 
 
 // In this file you can include the rest of your app's specific main process
