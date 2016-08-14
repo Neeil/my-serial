@@ -20,7 +20,7 @@ function createWindow () {
   mainWindow.loadURL(`file://${__dirname}/view/index.html`)
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -59,12 +59,14 @@ ipc.on('asynchronous-message', function(event, arg){
     console.log(arg)  
 })
 
+var portName
+var portBaud
+
 ipc.on('serialport-start', function(event, arg){
-    Serialport.list(function(err, ports){
-         ports.forEach(function(port){
-             console.log(port.comName);
-         })
-     })
+    portName = arg.portName;
+    portBaud = arg.baudrate;
+    event.sender.send('serialport-start', arg)
+    console.log(arg)
 })
 
 
