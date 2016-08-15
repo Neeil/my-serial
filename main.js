@@ -60,31 +60,12 @@ ipc.on('asynchronous-message', function(event, arg){
 })
 
 
-// var Serialport = require('serialport')
-// var portName
-// var portBaud
-// var serialport = new Serialport('COM4')
-
-// ipc.on('serialport-start', function(event, arg){
-//     portName = arg.portName;
-//     portBaud = arg.baudrate;
-//     serialport = new Serialport(portName, {
-//         baudrate : portBaud
-//     })    
-// })
-
 ipc.on('serialport-send', function(event, arg){
     // if(serialport){
     //     serialport.write(arg)
     // }
     console.log(arg)
 })
-
-// serialport.on('data', function(data){
-//     console.log('Data: ' + data)
-//     ipc.send('serialport-received', data)
-// })
-
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

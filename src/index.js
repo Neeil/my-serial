@@ -33,3 +33,15 @@ serialport.on('data', function(data){
     let rx = document.getElementById('rx')
     rx.value += data
 })
+
+const btn = document.getElementById('test');
+
+btn.addEventListener('click', function(event){
+    const modalPath = path.join('file://', __dirname, '../build/serialport.html')
+    let win = new BrowserWindow({ width: 450, height: 550, frame:true, resizable : true })
+    win.webContents.openDevTools()
+    win.on('close', function () { win = null })
+    win.loadURL(modalPath)
+    win.show()
+})
+
