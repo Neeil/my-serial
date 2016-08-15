@@ -9,17 +9,6 @@
 </head>
 
 <body>
-<div class="navbar-fixed">
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#!" class="brand-logo">Logo</a>
-            <ul class="right">
-                <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li>
-            </ul>
-        </div>
-    </nav>
-</div>
 
 <div>
     <br/>
@@ -27,7 +16,7 @@
         <div class="col s3">
             <form id="portConfigForm" name="portConfigForm">
                 <div class="row">
-                    <h5 class="header orange-text">Serial Port Settings</h5>
+                    <h6 class="header orange-text">Serial Port Settings</h6>
                 </div>
                 <div class="row">
                     <div class="input-field">
@@ -67,7 +56,7 @@
                         <label for="tx">tx</label>
                     </div>
                     <div class="input-field">
-                        <textarea id="rx" class="materialize-textarea">bbbbb</textarea>
+                        <textarea id="rx" class="materialize-textarea" rows='8'>bbbbb</textarea>
                         <label for="rx">rx</label>
                     </div>
                     </form>
@@ -93,8 +82,9 @@
         require('../src/index.js')
         var port = require('serialport')
 
-        $(document).ready(function () {
+        $('select').material_select();
 
+        $(document).ready(function () {
             port.list(function (err, ports) {
                 ports.forEach(function (port) {
                     var name = port.comName

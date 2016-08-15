@@ -2,17 +2,21 @@ const BrowserWindow = require('electron').remote.BrowserWindow
 const path = require('path')
 const ipc = require('electron').ipcRenderer
 
-const btn = document.getElementById('test');
+var Serialport = require('serialport')
+var serialport = new Serialport('COM4', false)
 
-btn.addEventListener('click', function(event){
-    const modalPath = path.join('file://', __dirname, '../view/serialconfig.html')
-    let win = new BrowserWindow({ width: 450, height: 550, frame:true, resizable : true })
-    win.webContents.openDevTools()
-    win.on('close', function () { win = null })
-    win.loadURL(modalPath)
-    win.show()
+const portNameSelect = document.getElementById('portName')
+const baudrateSelect = document.getElementById('baudrate')
+
+// Open Port button actions.
+const openBtn = document.getElementById('open-port')
+openBtn.addEventListener('click', function(event){
+    var portName = portNameSelect.options[portNameSelect.selectedIndex].value
+    var baudrate = baudrateSelect.options[baudrateSelect.selectedIndex].value    
+    serialport = new Serialport(portName)
 })
 
+// Send button actions.
 const sendBtn = document.getElementById('send-btn')
 sendBtn.addEventListener('click', function(event){
     let tx = document.getElementById('tx')
@@ -22,23 +26,7 @@ sendBtn.addEventListener('click', function(event){
     ipc.send('serialport-send', tx.value)
 })
 
-ipc.on('serialport-start', function(event, arg){
-    console.log(arg)
-})
-
-
-var Serialport = require('serialport')
-var portName
-var portBaud
-var serialport = new Serialport('COM4')
-
-
-ipc.on('serialport-send', function(event, arg){
-    if(serialport){
-        serialport.write(arg)
-    }
-})
-
+// serialport received event handler.
 serialport.on('data', function(data){
     console.log('Data: ' + data)
     ipc.send('serialport-received', data)
