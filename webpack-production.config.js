@@ -9,8 +9,7 @@ const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 const config = {
   entry: {
-    a: path.join(__dirname, '/src/app/app.js'),
-    b: path.join(__dirname, '/src/app/port.js')
+    app: path.join(__dirname, '/src/app/app.js')
   },
   // Render source-map file for final build
   devtool: 'source-map',
