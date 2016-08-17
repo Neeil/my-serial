@@ -46,6 +46,7 @@
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-tap-event-plugin": "^1.0.0",
-    "serialport": "^4.0.1"
+    "serialport": "^4.0.1",
+    "mdi":"^1.6.50"
   }
 }

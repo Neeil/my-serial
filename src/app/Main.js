@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Checkbox from 'material-ui/Checkbox';
 import SendControls from './SendControls'
+import Divider from 'material-ui/Divider';
 
 
 const styles = {
@@ -58,7 +59,7 @@ class Main extends Component {
 
     onSendClick = (e) =>{
         this.setState({
-
+            rxText : this.state.rxText += 'Hello'
         })
     };
 
@@ -78,15 +79,12 @@ class Main extends Component {
                     <PortConfig />
                 </div>
                 <div style={styles.trxGroup}>
-                    <div>
-                        <SendControls />
-                    </div>
+                    <SendControls />
                     <div style={styles.container}>
                         <TextField
                             id="tx"
                             hintText="Send Text"
                             floatingLabelText="Send:"
-                            value={this.state.txText}
                             style={{
                                 width:"100%"
                             }}
@@ -100,13 +98,13 @@ class Main extends Component {
                             id="rx"
                             hintText="Received Text"
                             floatingLabelText="Received:"
-                            value={this.state.rxText}
                             multiLine={true}
                             rows={4}
                             rowsMax={8}
                             style={{
                                 width:"100%"
                             }}
+                            value = {this.state.rxText}
                             floatingLabelFixed={true}
                             underlineStyle={styles.underlineStyle}
                             floatingLabelStyle={styles.floatingLabelStyle}

@@ -5,14 +5,14 @@ import RaisedButton from 'material-ui/RaisedButton'
 import IconButton from 'material-ui/IconButton';
 import serialport   from 'serialport'
 
-const portnameItems = [];
+let portnameItems = [];
 serialport.list((err, ports)=>{
     let portCount = 1;
     ports.forEach((port)=>{
         var name = port.comName;
         portnameItems.push(<MenuItem value={portCount} key={name} primaryText={`${name} ${port.manufacturer}`} />);
         portCount ++;
-    })
+    });
     console.log(portnameItems)
 });
 
@@ -44,6 +44,7 @@ const styles = {
         width : "80%"
     },
     refreshButton:{
+        marginTop : 20,
         float : 'right',
         width : "20%",
     },
@@ -54,15 +55,43 @@ const styles = {
 
 class PortConfig extends Component {
 
+    static defaultProps = {
+        baud : 9600,
+        stop : 1,
+        status : 'OPEN PORT'
+    };
+
     constructor(props) {
         super(props);
         this.state  = {
-            port : 1,
-            baud : 9600,
-            stop : 1,
-            status : 'start'
+            port :   1,
+            baud :   this.props.baud,
+            stop :   this.props.stop,
+            status : this.props.status
         }
     }
+
+    openPortEvent = (event) =>{
+        console.log(portnameItems);
+        console.log(this.state);
+        var port = portnameItems.find((port) =>{
+            return port.props.value === this.state.port;
+        }).key;
+    };
+
+    refreshPortEvent = (event) =>{
+        portnameItems = [];
+        serialport.list((err, ports)=>{
+            let portCount = 1;
+            ports.forEach((port)=>{
+                var name = port.comName;
+                portnameItems.push(<MenuItem value={portCount} key={name} primaryText={`${name} ${port.manufacturer}`} />);
+                portCount ++;
+            });
+            console.log(portnameItems);
+            this.setState({port : 1})
+        });
+    };
 
     handlePortChange = (event, index, port) => this.setState({port});
     handleBaudChange = (event, index, baud) => this.setState({baud});
@@ -81,12 +110,18 @@ class PortConfig extends Component {
                         floatingLabelText="COMx">
                         {portnameItems}
                     </SelectField>
-                    <IconButton style={styles.refreshButton} iconClassName="muidocs-icon-custom-github" />
+                    <IconButton
+                        tooltip="refresh ports"
+                        style={styles.refreshButton}
+                        iconClassName="mdi mdi-refresh"
+                        onClick={this.refreshPortEvent}
+                    />
                 </div>
                 <SelectField
                     style = {styles.selectField}
                     id="baudrate"
                     value = {this.state.baud}
+                    autoWidth={true}
                     onChange={this.handleBaudChange}
                     floatingLabelText="Baud Rate">
                     {baudrateItems}
@@ -99,7 +134,7 @@ class PortConfig extends Component {
                     floatingLabelText="Stop Bit">
                     {stopbitItems}
                 </SelectField>
-                <RaisedButton label="Open Port" primary={true} />
+                <RaisedButton label={this.state.status} primary={true} onClick={this.openPortEvent} />
             </div>
         )
     }

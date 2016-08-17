@@ -25,6 +25,7 @@ const styles = {
         marginTop : 0,
     },
     radioButtonGroup : {
+        display : 'inline-block',
         marginTop : 5,
         float : 'left',
         width : "20%",
@@ -35,7 +36,7 @@ const styles = {
     retransmitGroup :{
         marginTop : 5,
         float : 'left',
-        width : "25%",
+        width : "20%",
     },
 };
 
@@ -83,7 +84,7 @@ class SendControls extends Component{
                         label="Re-Transmit"
                         style={styles.checkbox}
                     />
-                    <div style={{background : yellow200}}>
+                    <div>
                         <TextField
                             id="period"
                             hintText="period"
