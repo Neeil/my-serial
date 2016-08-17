@@ -16,13 +16,22 @@ const styles = {
     textfield : {
         float : 'left',
         marginTop : 0,
-        width : "80%",
+        width : "8%",
     },
     radioButton : {
         margin : 0
     },
+    checkboxHex : {
+        display : 'inline',
+        float : 'left',
+        width : '15%',
+        marginTop : 20,
+    },
     checkbox : {
-        marginTop : 0,
+        display : 'inline',
+        float : 'left',
+        width : '20%',
+        marginTop : 20,
     },
     radioButtonGroup : {
         display : 'inline-block',
@@ -43,60 +52,45 @@ const styles = {
 
 class SendControls extends Component{
 
-    static defaultProps = {
-        period : 100
-    };
-
-    static propTypes = {
-        period : React.PropTypes.number.isRequired
-    };
-
-
     constructor(props) {
         super(props);
         this.state = {
-            peroid : this.props.period
+            period : 100
         }
+    }
+
+    periodOnChange = (event) =>{
+        this.setState({
+            period : event.target.value
+        })
     }
 
     render() {
         return (
             <div>
-                <RadioButtonGroup name="tx-type" defaultSelected="ascii" style={styles.radioButtonGroup} >
-                    <RadioButton
-                        value="ascii"
-                        label="ASCII"
-                        style={styles.radioButton}
-                    />
-                    <RadioButton
-                        value="hex"
-                        label="HEX"
-                        style={styles.radioButton}
-                    />
-                    <RadioButton
-                        value="dec"
-                        label="DEC"
-                        style={styles.radioButton}
-                    />
-                </RadioButtonGroup>
-                <div style={styles.retransmitGroup}>
-                    <Checkbox
-                        label="Re-Transmit"
-                        style={styles.checkbox}
-                    />
-                    <div>
-                        <TextField
-                            id="period"
-                            hintText="period"
-                            type="number"
-                            style={styles.textfield}
-                            value={this.state.period}
-                            underlineStyle={styles.underlineStyle}
-                        >
-                        </TextField>
-                        <a style={{float: 'left', width: "10%", marginTop:20}}>mS</a>
-                    </div>
+                <Checkbox
+                    label="HEX"
+                    style={styles.checkboxHex}
+                />
+                <Checkbox
+                    label="Re-Transmit"
+                    style={styles.checkbox}
+                />
+                <div>
+                    <TextField
+                        id="period"
+                        hintText="period"
+                        type="number"
+                        min = "0"
+                        style={styles.textfield}
+                        value={this.state.period}
+                        onChange={this.periodOnChange}
+                        underlineStyle={styles.underlineStyle}
+                    >
+                    </TextField>
+                    <a style={{float: 'left', width: "10%", marginTop:20}}>mS</a>
                 </div>
+
             </div>
         )
     }

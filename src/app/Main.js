@@ -3,10 +3,8 @@ import TextField from 'material-ui/TextField';
 import {deepOrange500, blue500, orange500,yellow200, blue200 } from 'material-ui/styles/colors';
 import PortConfig from './PortConfig'
 import RaisedButton from 'material-ui/RaisedButton'
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import Checkbox from 'material-ui/Checkbox';
 import SendControls from './SendControls'
-import Divider from 'material-ui/Divider';
+import CommandCollections from './CommandCollections'
 
 
 const styles = {
@@ -49,26 +47,29 @@ const styles = {
 
 class Main extends Component {
 
-    static defaultProps = {
-        period : 100
-    };
-
-    static propTypes = {
-        period : React.PropTypes.number.isRequired
-    };
-
     onSendClick = (e) =>{
         this.setState({
-            rxText : this.state.rxText += 'Hello'
+            rxText : this.state.rxText += this.state.txText
         })
     };
+
+    onTxChanged = (event) =>{
+        this.setState({
+            txText : event.target.value,
+        });
+    };
+
+    onClearClick =(event) =>{
+        this.setState({
+            rxText : ""
+        })
+    }
 
     constructor(props) {
         super(props);
         this.state = {
             txText : "",
             rxText : "",
-            peroid : this.props.period
         }
     }
 
@@ -88,12 +89,14 @@ class Main extends Component {
                             style={{
                                 width:"100%"
                             }}
+                            value = {this.state.txText}
+                            onChange={this.onTxChanged}
                             underlineStyle={styles.underlineStyle}
                             floatingLabelFixed={true}
                             floatingLabelStyle={styles.floatingLabelStyle}
                             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                         />
-                        <RaisedButton label="Send" primary={true} style={{width:"10%", margin:'10 auto'}} onClick={this.onSendClick}/>
+                        <RaisedButton label="Send" primary={true} style={{margin:'10 auto'}} onClick={this.onSendClick}/>
                         <TextField
                             id="rx"
                             hintText="Received Text"
@@ -110,8 +113,10 @@ class Main extends Component {
                             floatingLabelStyle={styles.floatingLabelStyle}
                             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                         />
+                        <RaisedButton label="Clear RX" primary={true} style={{margin:'10 auto'}} onClick={this.onClearClick}/>
                     </div>
                 </div>
+                <CommandCollections />
             </div>
         );
     }
