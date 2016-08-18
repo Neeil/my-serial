@@ -10,8 +10,7 @@ serialport.list((err, ports)=>{
     let portCount = 1;
     ports.forEach((port)=>{
         var name = port.comName;
-        portnameItems.push(<MenuItem value={portCount} key={name} primaryText={`${name} ${port.manufacturer}`} />);
-        portCount ++;
+        portnameItems.push(<MenuItem value={portCount} key={name} label={`${name}`} primaryText={`${name} ${port.manufacturer}`} />);        portCount ++;
     });
     console.log(portnameItems)
 });
@@ -41,12 +40,13 @@ const styles = {
     },
     portNameSelectField:{
         float : 'left',
-        width : "80%"
+        width : '75%'
     },
     refreshButton:{
         marginTop : 20,
-        float : 'right',
-        width : "20%",
+        float : 'left',
+        width : '25%',
+        maxWidth : 30
     },
     selectField:{
         width : "100%"
@@ -85,7 +85,7 @@ class PortConfig extends Component {
             let portCount = 1;
             ports.forEach((port)=>{
                 var name = port.comName;
-                portnameItems.push(<MenuItem value={portCount} key={name} primaryText={`${name} ${port.manufacturer}`} />);
+                portnameItems.push(<MenuItem value={portCount} key={name} label={`${name}`} primaryText={`${name} ${port.manufacturer}`} />);
                 portCount ++;
             });
             console.log(portnameItems);

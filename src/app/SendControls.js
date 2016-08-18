@@ -16,7 +16,7 @@ const styles = {
     textfield : {
         float : 'left',
         marginTop : 0,
-        width : "8%",
+        width : 50,
     },
     radioButton : {
         margin : 0
@@ -24,14 +24,14 @@ const styles = {
     checkboxHex : {
         display : 'inline',
         float : 'left',
-        width : '15%',
-        marginTop : 20,
+        width : 80,
+        marginTop : 15,
     },
     checkbox : {
         display : 'inline',
         float : 'left',
-        width : '20%',
-        marginTop : 20,
+        width : 135,
+        marginTop : 15,
     },
     radioButtonGroup : {
         display : 'inline-block',
@@ -88,7 +88,7 @@ class SendControls extends Component{
                         underlineStyle={styles.underlineStyle}
                     >
                     </TextField>
-                    <a style={{float: 'left', width: "10%", marginTop:20}}>mS</a>
+                    <a style={{float: 'left', width: "10%", marginTop:15}}>mS</a>
                 </div>
 
             </div>

@@ -5,19 +5,27 @@ import PortConfig from './PortConfig'
 import RaisedButton from 'material-ui/RaisedButton'
 import SendControls from './SendControls'
 import CommandCollections from './CommandCollections'
+import uuid  from 'node-uuid'
 
 
 const styles = {
     configGroup: {
         float: 'left',
-        width: '25%',
+        width: '20%',
+        minWidth : 150,
         marginTop: '0px',
         padding: '0 10px',
         boxSizing: 'border-box'
     },
     trxGroup: {
         float: 'left',
-        width: '75%',
+        width: '80%',
+        marginTop: '0px',
+        padding: '0 10px',
+        boxSizing: 'border-box'
+    },
+    commandCollectionGroup : {
+        width: '99%',
         marginTop: '0px',
         padding: '0 10px',
         boxSizing: 'border-box'
@@ -47,6 +55,14 @@ const styles = {
 
 class Main extends Component {
 
+    static defaultProps = {
+        chipData : [
+            {key : 0, label : 'AT+INFO?', type: 'ASCII', name: 'Get Info'},
+            {key : 1, label : 'AT+BAUD?', type: 'ASCII', name: 'Get Ports'},
+            {key : 2, label : 'AT+RFCH?', type: 'ASCII', name: 'Get Current RF Channel'}
+        ],
+    };
+
     onSendClick = (e) =>{
         this.setState({
             rxText : this.state.rxText += this.state.txText
@@ -63,6 +79,24 @@ class Main extends Component {
         this.setState({
             rxText : ""
         })
+    };
+
+    onSaveCommandClick = (event) => {
+        this.chipData = this.state.chipData;
+        console.log(this.chipData.map((chip)=>chip.label).indexOf(this.state.txText))
+        if(this.chipData.map((chip)=>chip.label).indexOf(this.state.txText) === -1) {
+            const chipToAdd = {
+                key: uuid.v1(),
+                label: this.state.txText,
+                type: 'ASCII'
+            };
+            this.chipData.push(chipToAdd);
+            this.setState({chipData: this.chipData})
+        }
+    };
+
+    onSaveRxClick = (event) => {
+        alert(this.state.rxText)
     }
 
     constructor(props) {
@@ -70,6 +104,7 @@ class Main extends Component {
         this.state = {
             txText : "",
             rxText : "",
+            chipData : this.props.chipData
         }
     }
 
@@ -96,7 +131,8 @@ class Main extends Component {
                             floatingLabelStyle={styles.floatingLabelStyle}
                             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                         />
-                        <RaisedButton label="Send" primary={true} style={{margin:'10 auto'}} onClick={this.onSendClick}/>
+                        <RaisedButton label="Send" primary={true} style={{margin: 5}} onClick={this.onSendClick}/>
+                        <RaisedButton label="Save Command" primary={true} style={{margin:5}} onClick={this.onSaveCommandClick}/>
                         <TextField
                             id="rx"
                             hintText="Received Text"
@@ -113,10 +149,15 @@ class Main extends Component {
                             floatingLabelStyle={styles.floatingLabelStyle}
                             floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                         />
-                        <RaisedButton label="Clear RX" primary={true} style={{margin:'10 auto'}} onClick={this.onClearClick}/>
+                        <RaisedButton label="Clear RX" primary={true} style={{margin:5}} onClick={this.onClearClick}/>
+                        <RaisedButton label="Save RX Data"  primary={true} style={{margin:5}} onClick={this.onSaveRxClick}/>
                     </div>
                 </div>
-                <CommandCollections />
+                <div style={styles.commandCollectionGroup} >
+                    <div style={styles.container}>
+                        <CommandCollections chipData={this.state.chipData} />
+                    </div>
+                </div>
             </div>
         );
     }

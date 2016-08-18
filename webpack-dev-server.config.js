@@ -20,10 +20,13 @@ const config = {
     port: 3000, // Port Number
     host: 'localhost', // Change to '0.0.0.0' for external facing server
   },
+  externals : {
+    "serialport" : "serialport"
+  },
   devtool: 'eval',
   output: {
     path: buildPath, // Path of output file
-    filename: 'app.js',
+    filename: '[name].js',
   },
   plugins: [
     // Enables Hot Modules Replacement
@@ -43,8 +46,19 @@ const config = {
         loaders: ['react-hot', 'babel-loader'], // react-hot is like browser sync and babel loads jsx and es6-7
         exclude: [nodeModulesPath],
       },
+      {
+        test: /\.node$/,
+        loaders: ['node-loader'],
+        exclude: [nodeModulesPath],
+      },
+      {
+        test: /\.json$/,
+        loaders:['json-loader'],
+        exclude: [nodeModulesPath],
+      }
     ],
   },
+  target : 'electron',
 };
 
 module.exports = config;

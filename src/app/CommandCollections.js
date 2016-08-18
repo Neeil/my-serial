@@ -8,11 +8,11 @@ import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
 import { blue500, orange500 } from 'material-ui/styles/colors'
 
-const style={
+const styles={
     card: {
         width: "100%",
         margin: 10,
-        display: 'inline-block'
+        display: 'inline-block',
     },
     chip : {
         margin : 4
@@ -21,17 +21,25 @@ const style={
         display : 'flex',
         flexWrap : 'wrap'
     }
-}
+};
 
 export default class CommandCollections extends Component{
+
+    static defaultProps = {
+        chipData : [
+            {key : 0, label : 'AT+INFO?', type: 'ASCII', name: 'Get Info'},
+            {key : 1, label : 'AT+BAUD?', type: 'ASCII', name: 'Get Ports'}
+        ],
+    };
+
+    static propTypes = {
+        chipData : React.PropTypes.array
+    };
 
     constructor(props) {
         super(props);
         this.state={
-            chipData : [
-                {key : 0, label : 'AT+INFO?', type: 'ASCII', name: 'Get Info'},
-                {key : 1, label : 'AT+BAUD?', type: 'ASCII', name: 'Get Ports'}
-            ]
+            chipData : this.props.chipData
         };
     }
 
@@ -54,7 +62,7 @@ export default class CommandCollections extends Component{
                 key={data.key}
                 onTouchTap = { () =>this.onTouchTapHandler(data.label)}
                 onRequestDelete={() => this.onRequestDeleteHandler(data.key)}
-                style={style.chip}
+                style={styles.chip}
             >
                 <Avatar color={data.type === 'ASCII' ? blue500 : orange500 }>
                     {data.type ===  'ASCII' ? 'A' : 'H'}
@@ -66,13 +74,13 @@ export default class CommandCollections extends Component{
 
     render() {
         return (
-            <Card expanded={true} style={style.card}>
+            <Card expanded={true} style={styles.card}>
                 <CardTitle
                     title="Commands"
                 />
                 <CardText expandable={true}>
-                    <div style={style.wrapper}>
-                            {this.state.chipData.map(this.renderChip, this)}
+                    <div style={styles.wrapper}>
+                            {this.props.chipData.map(this.renderChip, this)}
                     </div>
                 </CardText>
             </Card>
