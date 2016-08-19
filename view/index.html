@@ -1,65 +1,79 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <head>
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
-</head>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/index.css" />
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    </head>
 
-<body>
+    <body>
 
-<div>
-    <br/>
-    <div class="row">
-        <div class="col s3">
-            <form id="portConfigForm" name="portConfigForm">
-                <div class="row">
-                    <h6 class="header orange-text">Serial Port Settings</h6>
-                </div>
-                <div class="row">
-                    <div class="input-field">
-                        <select id="portName" name="portName">
-                        </select>
-                        <label>COMx</label>
+    <div>
+        <br/>
+        <div class="row">
+            <div class="col s2">
+                <form id="portConfigForm" name="portConfigForm">
+                    <div class="row">
+                        <h6 class="header orange-text">Serial Port Settings</h6>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field">
-                        <select id="baudrate" name="baudrate" onchange="baudrateSelected(this)">
-                            <option value="4800">4800</option>
-                            <option value="9600">9600</option>
-                            <option value="19200">19200</option>
-                            <option value="38400">38400</option>
-                            <option value="57600">57600</option>
-                            <option value="115200">115200</option>
-                        </select>
-                        <label>Baud Rate</label>
+                    <div class="row">
+                        <div class="input-field">
+                            <select id="portName" name="portName">
+                            </select>
+                            <label>COMx</label>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <a id="open-port" class="waves-effect waves-light btn">OPEN</a>
-                    <a id="test-port" class="waves-effect waves-light btn">TEST</a>
-                </div>
-            </form>
-        </div>
-        <div class="col s9">
-            <div class="row center">
-                <a id="test" class="waves-effect waves-light btn">Port Settings</a>
-                <a id="send-btn" class="waves-effect waves-light btn">Test</a>
+                    <div class="row">
+                        <div class="input-field">
+                            <select id="baudrate" name="baudrate" onchange="baudrateSelected(this)">
+                                <option value="4800">4800</option>
+                                <option value="9600">9600</option>
+                                <option value="19200">19200</option>
+                                <option value="38400">38400</option>
+                                <option value="57600">57600</option>
+                                <option value="115200">115200</option>
+                            </select>
+                            <label>Baud Rate</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a id="open-port" class="waves-effect waves-light btn">OPEN</a>
+                    </div>
+                </form>
+                <form action="#">
+                    <p>
+                        <input type="checkbox" id="hex" />
+                        <label for="hex">HEX</label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="period-send"/>
+                        <label for="period-send">Period</label>
+                    </p>
+                    <div class="input-field">                    
+                        <input id="period_count" type="number" class="validate">
+                        <label for="period_count">Period Count</label>
+                    </div>
+                </form>
             </div>
-            <div class="row">
+            <div class="col s9">
+                <div class="row center">
+                    <a id="test" class="waves-effect waves-light btn">Port Settings</a>
+                    <a id="send-btn" class="waves-effect waves-light btn">Test</a>                
+                </div>
                 <div class="row">
-                    <div class="input-field">
-                        <textarea id="tx" class="materialize-textarea">aaa</textarea>
-                        <label for="tx">tx</label>
+                    <div class="row">
+                        <div class="input-field">
+                            <textarea id="tx" class="materialize-textarea">aaa</textarea>
+                            <label for="tx">tx</label>
+                        </div>
+                        <div class="input-field">
+                            <textarea id="rx" class="materialize-textarea" rows='8'>bbbbb</textarea>
+                            <label for="rx">rx</label>
+                        </div>
+                        </form>
                     </div>
-                    <div class="input-field">
-                        <textarea id="rx" class="materialize-textarea" rows='8'>bbbbb</textarea>
-                        <label for="rx">rx</label>
-                    </div>
-                    </form>
                 </div>
             </div>
         </div>

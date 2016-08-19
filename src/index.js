@@ -1,9 +1,10 @@
 const BrowserWindow = require('electron').remote.BrowserWindow
 const path = require('path')
 const ipc = require('electron').ipcRenderer
+const $ = require('jquery')
 
 var Serialport = require('serialport')
-var serialport = new Serialport('COM4', false)
+var serialport = new Serialport('COM4')
 
 const portNameSelect = document.getElementById('portName')
 const baudrateSelect = document.getElementById('baudrate')
@@ -30,9 +31,18 @@ sendBtn.addEventListener('click', function(event){
 serialport.on('data', function(data){
     console.log('Data: ' + data)
     ipc.send('serialport-received', data)
-    let rx = document.getElementById('rx')
-    rx.value += data
+    let rx = document.getElementById('rx').value  + data
+    $('#rx').val(rx);
+    $('#rx').trigger('autoresize');
 })
+
+function sendData(){
+    if(serialport){
+        console.log('Out...')
+//        serialport.write(tx.value);
+    }
+}
+
 
 const btn = document.getElementById('test');
 
@@ -43,5 +53,19 @@ btn.addEventListener('click', function(event){
     win.on('close', function () { win = null })
     win.loadURL(modalPath)
     win.show()
+})
+
+let periodStart = false
+var intId =  0
+const periodSend = document.getElementById('period-send')
+periodSend.addEventListener('change', function(event){
+    if(event.target.checked){
+        periodStart = true;
+        intId = window.setInterval(()=>{serialport.write(tx.value);}, 50);
+        console.log(intId)
+    }else{
+        console.log(intId)
+        window.clearInterval(intId)
+    }
 })
 
