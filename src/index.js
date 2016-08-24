@@ -33,7 +33,7 @@ serialport.on('data', function(data){
     ipc.send('serialport-received', data)
     let rx = document.getElementById('rx').value  + data
     $('#rx').val(rx);
-    $('#rx').trigger('autoresize');
+    // $('#rx').trigger('autoresize');
 })
 
 function sendData(){
@@ -44,16 +44,16 @@ function sendData(){
 }
 
 
-const btn = document.getElementById('test');
+// const btn = document.getElementById('test');
 
-btn.addEventListener('click', function(event){
-    const modalPath = path.join('file://', __dirname, '../build/serialport.html')
-    let win = new BrowserWindow({ width: 450, height: 550, frame:true, resizable : true })
-    win.webContents.openDevTools()
-    win.on('close', function () { win = null })
-    win.loadURL(modalPath)
-    win.show()
-})
+// btn.addEventListener('click', function(event){
+//     const modalPath = path.join('file://', __dirname, '../build/serialport.html')
+//     let win = new BrowserWindow({ width: 450, height: 550, frame:true, resizable : true })
+//     win.webContents.openDevTools()
+//     win.on('close', function () { win = null })
+//     win.loadURL(modalPath)
+//     win.show()
+// })
 
 let periodStart = false
 var intId =  0

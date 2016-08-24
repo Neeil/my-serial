@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="css/index.css" />
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <link href="css/mui.min.css" rel="stylesheet" type="text/css" />
+        <script src="js/mui.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="css/index.css" />
     </head>
 
     <body>
 
-    <div>
+    <div class="mui-container-fluid" >
         <br/>
-        <div class="row">
-            <div class="col s2">
+        <div class="mui-row">
+            <div class="mui-col-md-2">
                 <form id="portConfigForm" name="portConfigForm">
                     <div class="row">
                         <h6 class="header orange-text">Serial Port Settings</h6>
                     </div>
                     <div class="row">
-                        <div class="input-field">
+                        <div class="mui-select">
                             <select id="portName" name="portName">
                             </select>
                             <label>COMx</label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field">
+                        <div class="mui-select">
                             <select id="baudrate" name="baudrate" onchange="baudrateSelected(this)">
                                 <option value="4800">4800</option>
                                 <option value="9600">9600</option>
@@ -39,7 +37,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <a id="open-port" class="waves-effect waves-light btn">OPEN</a>
+                        <button id="open-port" class="mui-btn mui-btn--primary">OPEN</button>
                     </div>
                 </form>
                 <form action="#">
@@ -51,30 +49,26 @@
                         <input type="checkbox" id="period-send"/>
                         <label for="period-send">Period</label>
                     </p>
-                    <div class="input-field">                    
-                        <input id="period_count" type="number" class="validate">
-                        <label for="period_count">Period Count</label>
+                    <div class="mui-textfield">
+                        <input type="number"  min="0">
+                        <label>Period Count</label>
                     </div>
                 </form>
             </div>
-            <div class="col s9">
-                <div class="row center">
-                    <a id="test" class="waves-effect waves-light btn">Port Settings</a>
-                    <a id="send-btn" class="waves-effect waves-light btn">Test</a>                
-                </div>
-                <div class="row">
+            <div class="mui-col-md-10">
                     <div class="row">
-                        <div class="input-field">
-                            <textarea id="tx" class="materialize-textarea">aaa</textarea>
-                            <label for="tx">tx</label>
+                        <div class="mui-textfield mui-textfield--float-label">
+                            <input id="tx" type="text" value="Value on load">
+                            <label>tx</label>
                         </div>
-                        <div class="input-field">
+                        <button id="send-btn" class="mui-btn mui-btn--primary">Send</button>   
+                    </div>
+                        <div class="mui-textfield mui-textfield--float-label">
                             <textarea id="rx" class="materialize-textarea" rows='8'>bbbbb</textarea>
                             <label for="rx">rx</label>
                         </div>
                         </form>
                     </div>
-                </div>
             </div>
         </div>
     </div>
@@ -90,13 +84,10 @@
     <script src="js/jquery-3.1.0.min.js"></script>
     <!-- Insert this line after script imports -->
     <script>if (window.module) module = window.module;</script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
 
     <script type="text/javascript">
         require('../src/index.js')
         var port = require('serialport')
-
-        $('select').material_select();
 
         $(document).ready(function () {
             port.list(function (err, ports) {
@@ -106,7 +97,6 @@
                     var option = '<option value="' + name + '">' + name + '</option>'
                     $('#portName').append(option)
                 })
-                $('select').material_select();
             })
         });
 
